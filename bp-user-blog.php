@@ -13,38 +13,38 @@ if ( ! defined( 'ABSPATH' ) )
 
 /**
  * ========================================================================
- * CONSTANTS
+ * CONSTANTS 
  * ========================================================================
  */
 // Codebase version
-if ( ! defined( 'BUDDYBOSS_SAP_PLUGIN_VERSION' ) ) {
-	define( 'BUDDYBOSS_SAP_PLUGIN_VERSION', '1.1.1' );
+if ( ! defined( 'BUDDYBOSS_BBA_PLUGIN_VERSION' ) ) {
+	define( 'BUDDYBOSS_BBA_PLUGIN_VERSION', '1.1.1' );
 }
 
 // Database version
-if ( ! defined( 'BUDDYBOSS_SAP_PLUGIN_DB_VERSION' ) ) {
-	define( 'BUDDYBOSS_SAP_PLUGIN_DB_VERSION', 1 );
+if ( ! defined( 'BUDDYBOSS_BBA_PLUGIN_DB_VERSION' ) ) {
+	define( 'BUDDYBOSS_BBA_PLUGIN_DB_VERSION', 1 );
 }
 
 // Directory
-if ( ! defined( 'BUDDYBOSS_SAP_PLUGIN_DIR' ) ) {
-	define( 'BUDDYBOSS_SAP_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+if ( ! defined( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) {
+	define( 'BUDDYBOSS_BBA_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 }
 
 // Url
-if ( ! defined( 'BUDDYBOSS_SAP_PLUGIN_URL' ) ) {
+if ( ! defined( 'BUDDYBOSS_BBA_PLUGIN_URL' ) ) {
 	$plugin_url = plugin_dir_url( __FILE__ );
 
 	// If we're using https, update the protocol. Workaround for WP13941, WP15928, WP19037.
 	if ( is_ssl() )
 		$plugin_url = str_replace( 'http://', 'https://', $plugin_url );
 
-	define( 'BUDDYBOSS_SAP_PLUGIN_URL', $plugin_url );
+	define( 'BUDDYBOSS_BBA_PLUGIN_URL', $plugin_url );
 }
 
 // File
-if ( ! defined( 'BUDDYBOSS_SAP_PLUGIN_FILE' ) ) {
-	define( 'BUDDYBOSS_SAP_PLUGIN_FILE', __FILE__ );
+if ( ! defined( 'BUDDYBOSS_BBA_PLUGIN_FILE' ) ) {
+	define( 'BUDDYBOSS_BBA_PLUGIN_FILE', __FILE__ );
 }
 
 /**
@@ -58,19 +58,19 @@ if ( ! defined( 'BUDDYBOSS_SAP_PLUGIN_FILE' ) ) {
  *
  * @return void
  */
-add_action( 'plugins_loaded', 'BUDDYBOSS_SAP_init' );
+add_action( 'plugins_loaded', 'BUDDYBOSS_BBA_init' );
 
-function BUDDYBOSS_SAP_init() {
+function BUDDYBOSS_BBA_init() {
 
-	global $bp,$BUDDYBOSS_SAP;
+	global $bp,$BUDDYBOSS_BBA;
         
         if ( !$bp ) {
-		add_action('admin_notices','sap_bp_admin_notice');
-		add_action('network_admin_notices','sap_bp_admin_notice');
+		add_action('admin_notices','bba_bp_admin_notice');
+		add_action('network_admin_notices','bba_bp_admin_notice');
 		return;
 	}
 
-	$main_include = BUDDYBOSS_SAP_PLUGIN_DIR . 'includes/main-class.php';
+	$main_include = BUDDYBOSS_BBA_PLUGIN_DIR . 'includes/main-class.php';
 
 	try {
 		if ( file_exists( $main_include ) ) {
@@ -84,7 +84,7 @@ function BUDDYBOSS_SAP_init() {
 		echo $msg;
 	}
 
-	$BUDDYBOSS_SAP = BuddyBoss_SAP_Plugin::instance();
+	$BUDDYBOSS_BBA = BuddyBoss_BBA_Plugin::instance();
 }
 
 /**
@@ -92,12 +92,12 @@ function BUDDYBOSS_SAP_init() {
  * it meets all requirements
  * @return void
  */
-function sap_requirements()
+function bba_requirements()
 {
 
     global $Plugin_Requirements_Check;
 
-    $requirements_Check_include  = BUDDYBOSS_SAP_PLUGIN_DIR  . 'includes/requirements-class.php';
+    $requirements_Check_include  = BUDDYBOSS_BBA_PLUGIN_DIR  . 'includes/requirements-class.php';
 
     try
     {
@@ -106,7 +106,7 @@ function sap_requirements()
             require( $requirements_Check_include );
         }
         else{
-            $msg = sprintf( __( "Couldn't load SAP_Plugin_Check class at:<br/>%s", 'bp-user-blog' ), $requirements_Check_include );
+            $msg = sprintf( __( "Couldn't load BBA_Plugin_Check class at:<br/>%s", 'bp-user-blog' ), $requirements_Check_include );
             throw new Exception( $msg, 404 );
         }
     }
@@ -116,24 +116,24 @@ function sap_requirements()
         echo $msg;
     }
 
-    $Plugin_Requirements_Check = new SAP_Plugin_Requirements_Check();
+    $Plugin_Requirements_Check = new BBA_Plugin_Requirements_Check();
     $Plugin_Requirements_Check->activation_check();
 
 }
-register_activation_hook( __FILE__, 'sap_requirements' );
+register_activation_hook( __FILE__, 'bba_requirements' );
 
 /**
  * Must be called after hook 'plugins_loaded'
  * @return BuddyBoss Bsp Plugin main controller object
  */
-function buddyboss_sap() {
+function buddyboss_bba() {
 	
-	global $BUDDYBOSS_SAP;
-	return $BUDDYBOSS_SAP;
+	global $BUDDYBOSS_BBA;
+	return $BUDDYBOSS_BBA;
 	
 }
 
-function sap_bp_admin_notice() {
+function bba_bp_admin_notice() {
 	echo "<div class='error'><p>BuddyPress User Blog needs BuddyPress activated</p></div>";
 }
 
@@ -144,7 +144,7 @@ if ( !function_exists( 'register_buddyboss_menu_page' ) ) {
 
 	function register_buddyboss_menu_page() {
 		// Set position with odd number to avoid confict with other plugin/theme.
-		add_menu_page( 'BuddyBoss', 'BuddyBoss', 'manage_options', 'buddyboss-settings', '', buddyboss_sap()->assets_url . '/images/logo.svg', 61.000129 );
+		add_menu_page( 'BuddyBoss', 'BuddyBoss', 'manage_options', 'buddyboss-settings', '', buddyboss_bba()->assets_url . '/images/logo.svg', 61.000129 );
 
 		// To remove empty parent menu item.
 		add_submenu_page( 'buddyboss-settings', 'BuddyBoss', 'BuddyBoss', 'manage_options', 'buddyboss-settings' );
