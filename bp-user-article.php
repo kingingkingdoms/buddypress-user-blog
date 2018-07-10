@@ -76,11 +76,11 @@ function BUDDYBOSS_BBA_init() {
 		if ( file_exists( $main_include ) ) {
 			require( $main_include );
 		} else {
-			$msg = sprintf( __( "Couldn't load main class at:<br/>%s", 'bp-user-blog' ), $main_include );
+			$msg = sprintf( __( "Couldn't load main class at:<br/>%s", 'bp-user-article' ), $main_include );
 			throw new Exception( $msg, 404 );
 		}
 	} catch ( Exception $e ) {
-		$msg = sprintf( __( "<h1>Fatal error:</h1><hr/><pre>%s</pre>", 'bp-user-blog' ), $e->getMessage() );
+		$msg = sprintf( __( "<h1>Fatal error:</h1><hr/><pre>%s</pre>", 'bp-user-article' ), $e->getMessage() );
 		echo $msg;
 	}
 
@@ -106,13 +106,13 @@ function bba_requirements()
             require( $requirements_Check_include );
         }
         else{
-            $msg = sprintf( __( "Couldn't load BBA_Plugin_Check class at:<br/>%s", 'bp-user-blog' ), $requirements_Check_include );
+            $msg = sprintf( __( "Couldn't load BBA_Plugin_Check class at:<br/>%s", 'bp-user-article' ), $requirements_Check_include );
             throw new Exception( $msg, 404 );
         }
     }
     catch( Exception $e )
     {
-        $msg = sprintf( __( "<h1>Fatal error:</h1><hr/><pre>%s</pre>", 'bp-user-blog' ), $e->getMessage() );
+        $msg = sprintf( __( "<h1>Fatal error:</h1><hr/><pre>%s</pre>", 'bp-user-article' ), $e->getMessage() );
         echo $msg;
     }
 
