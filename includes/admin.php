@@ -7,7 +7,7 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
+if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 
 	/**
 	 *
@@ -16,7 +16,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 	 *
 	 *
 	 */
-	class BuddyBoss_SAP_Admin {
+	class BuddyBoss_BBA_Admin {
 		/* Options/Load
 		 * ===================================================================
 		 */
@@ -54,7 +54,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		 *
 		 * @param  array  $options [description]
 		 *
-		 * @uses BuddyBoss_SAP_Admin::setup() Init admin class
+		 * @uses BuddyBoss_BBA_Admin::setup() Init admin class
 		 *
 		 * @return object Admin class
 		 */
@@ -62,7 +62,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 			static $instance = null;
 
 			if ( null === $instance ) {
-				$instance = new BuddyBoss_SAP_Admin;
+				$instance = new BuddyBoss_BBA_Admin;
 				$instance->setup();
 			}
 
@@ -80,12 +80,12 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		 *
 		 * @param  string $key Option key
 		 *
-		 * @uses BuddyBoss_SAP_Plugin::option() Get option
+		 * @uses BuddyBoss_BBA_Plugin::option() Get option
 		 *
 		 * @return mixed      Option value
 		 */
 		public function option( $key ) {
-			$value = buddyboss_sap()->option( $key );
+			$value = buddyboss_bba()->option( $key );
 			return $value;
 		}
 
@@ -98,7 +98,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		 *
 		 * @since BuddyPress User Blog (1.0.0)
 		 *
-		 * @uses buddyboss_sap() Get options from main BuddyBoss_SAP_Plugin class
+		 * @uses buddyboss_bba() Get options from main BuddyBoss_BBA_Plugin class
 		 * @uses is_admin() Ensures we're in the admin area
 		 * @uses curent_user_can() Checks for permissions
 		 * @uses add_action() Add hooks
@@ -154,7 +154,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 				if ( !function_exists( 'is_plugin_active_for_network' ) )
 					require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
-				if ( is_plugin_active_for_network( basename( constant( 'BUDDYBOSS_SAP_PLUGIN_DIR' ) ) . '/bp-user-blog.php' ) ) {
+				if ( is_plugin_active_for_network( basename( constant( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) . '/bp-user-blog.php' ) ) {
 					$network_activated = true;
 				}
 			}
@@ -172,9 +172,9 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		 */
 		public function admin_init() {
 
-			$this->plugin_settings_tabs[ 'buddyboss_sap_plugin_options' ] = 'General';
+			$this->plugin_settings_tabs[ 'buddyboss_bba_plugin_options' ] = 'General';
 
-			register_setting( 'buddyboss_sap_plugin_options', 'buddyboss_sap_plugin_options', array( $this, 'plugin_options_validate' ) );
+			register_setting( 'buddyboss_bba_plugin_options', 'buddyboss_bba_plugin_options', array( $this, 'plugin_options_validate' ) );
 			add_settings_section( 'general_section', __( 'General Settings', 'bp-user-blog' ), array( $this, 'section_general' ), __FILE__ );
 
 			//general options
@@ -186,10 +186,10 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		}
 
 		function register_support_settings() {
-			$this->plugin_settings_tabs[ 'buddyboss_sap_support_options' ] = __( 'Support', 'bp-user-blog' );
+			$this->plugin_settings_tabs[ 'buddyboss_bba_support_options' ] = __( 'Support', 'bp-user-blog' );
 
-			register_setting( 'buddyboss_sap_support_options', 'buddyboss_sap_support_options' );
-			add_settings_section( 'section_support', ' ', array( &$this, 'section_support_desc' ), 'buddyboss_sap_support_options' );
+			register_setting( 'buddyboss_bba_support_options', 'buddyboss_bba_support_options' );
+			add_settings_section( 'section_support', ' ', array( &$this, 'section_support_desc' ), 'buddyboss_bba_support_options' );
 		}
 
 		function section_support_desc() {
@@ -208,7 +208,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 			}
 
 			echo '<label for="publish_post">';
-			echo "<input " . $checked . " id='publish_post' name='buddyboss_sap_plugin_options[publish_post]' type='checkbox' />  ";
+			echo "<input " . $checked . " id='publish_post' name='buddyboss_bba_plugin_options[publish_post]' type='checkbox' />  ";
 			_e( 'Allow users to publish posts. If unchecked, they can only submit drafts for review.', 'bp-user-blog' );
 			echo '</label>';
 		}
@@ -223,7 +223,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 			}
 
 			echo '<label for="bookmark_post">';
-			echo "<input " . $checked . " id='bookmark_post' name='buddyboss_sap_plugin_options[bookmark_post]' type='checkbox' />  ";
+			echo "<input " . $checked . " id='bookmark_post' name='buddyboss_bba_plugin_options[bookmark_post]' type='checkbox' />  ";
 			_e( 'Allow users to bookmark posts.', 'bp-user-blog' );
 			echo '</label>';
 		}
@@ -238,7 +238,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 			}
 
 			echo '<label for="recommend_post">';
-			echo "<input " . $checked . " id='recommend_post' name='buddyboss_sap_plugin_options[recommend_post]' type='checkbox' />  ";
+			echo "<input " . $checked . " id='recommend_post' name='buddyboss_bba_plugin_options[recommend_post]' type='checkbox' />  ";
 			_e( 'Allow users to recommend posts.', 'bp-user-blog' );
 			echo '</label>';
 		}
@@ -247,7 +247,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 			$create_new_post_page = $this->option( 'create-new-post' );
 
 			echo wp_dropdown_pages( array(
-				'name'				 => 'buddyboss_sap_plugin_options[create-new-post]',
+				'name'				 => 'buddyboss_bba_plugin_options[create-new-post]',
 				'echo'				 => false,
 				'show_option_none'	 => __( '- None -', 'bp-user-blog' ),
 				'selected'			 => $create_new_post_page
@@ -263,7 +263,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 			$bookmarks_page = $this->option( 'bookmarks-page' );
 
 			echo wp_dropdown_pages( array(
-				'name'				 => 'buddyboss_sap_plugin_options[bookmarks-page]',
+				'name'				 => 'buddyboss_bba_plugin_options[bookmarks-page]',
 				'echo'				 => false,
 				'show_option_none'	 => __( '- None -', 'bp-user-blog' ),
 				'selected'			 => $bookmarks_page
@@ -293,7 +293,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		 *
 		 * @since BuddyPress User Blog (1.0.0)
 		 *
-		 * @uses BuddyBoss_SAP_Admin::admin_menu() Add settings page option sections
+		 * @uses BuddyBoss_BBA_Admin::admin_menu() Add settings page option sections
 		 */
 		public function network_admin_menu() {
 			return $this->admin_menu();
@@ -333,8 +333,8 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 					}
 					?>
 					<?php
-					if ( 'buddyboss_sap_plugin_options' == $tab || empty( $_GET[ 'tab' ] ) ) {
-						settings_fields( 'buddyboss_sap_plugin_options' );
+					if ( 'buddyboss_bba_plugin_options' == $tab || empty( $_GET[ 'tab' ] ) ) {
+						settings_fields( 'buddyboss_bba_plugin_options' );
 						do_settings_sections( __FILE__ );
 						?>
 						<p class="submit">
@@ -352,7 +352,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		}
 
 		function plugin_options_tabs() {
-			$current_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'buddyboss_sap_plugin_options';
+			$current_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'buddyboss_bba_plugin_options';
 
 			echo '<h2 class="nav-tab-wrapper">';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
@@ -364,7 +364,7 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 
 		public function add_action_links( $links, $file ) {
 			// Return normal links if not this plugin
-			if ( plugin_basename( basename( constant( 'BUDDYBOSS_SAP_PLUGIN_DIR' ) ) . '/bp-user-blog.php' ) != $file ) {
+			if ( plugin_basename( basename( constant( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) . '/bp-user-blog.php' ) != $file ) {
 				return $links;
 			}
 
@@ -375,17 +375,17 @@ if ( !class_exists( 'BuddyBoss_SAP_Admin' ) ) {
 		}
 
 		public function save_network_settings_page() {
-			if ( !check_admin_referer( 'buddyboss_sap_plugin_options-options' ) )
+			if ( !check_admin_referer( 'buddyboss_bba_plugin_options-options' ) )
 				return;
 
 			if ( !current_user_can( $this->capability ) )
 				die( 'Access denied!' );
 
 			if ( isset( $_POST[ 'bboss_g_s_settings_submit' ] ) ) {
-				$submitted	 = stripslashes_deep( $_POST[ 'buddyboss_sap_plugin_options' ] );
+				$submitted	 = stripslashes_deep( $_POST[ 'buddyboss_bba_plugin_options' ] );
 				$submitted	 = $this->plugin_options_validate( $submitted );
 
-				update_site_option( 'buddyboss_sap_plugin_options', $submitted );
+				update_site_option( 'buddyboss_bba_plugin_options', $submitted );
 			}
 
 			// Where are we redirecting to?
