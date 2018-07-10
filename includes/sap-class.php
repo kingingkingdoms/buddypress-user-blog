@@ -8,14 +8,14 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
+if ( !class_exists( 'BuddyBoss_BBA_BP_Component' ) ):
 
 	/**
 	 *
 	 * BuddyPress User Blog BuddyPress Component
 	 * ***********************************
 	 */
-	class BuddyBoss_SAP_BP_Component extends BP_Component {
+	class BuddyBoss_BBA_BP_Component extends BP_Component {
 
             /**
              * INITIALIZE CLASS
@@ -23,11 +23,11 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
              * @since BuddyPress User Blog 1.0
              */
             public function __construct() {
-                    $slug = $this->slug = 'sap';
+                    $slug = $this->slug = 'bba';
 
             parent::start(
                 $slug,
-                __( 'SAP', 'bp-user-blog' ),
+                __( 'BBA', 'bp-user-blog' ),
                 dirname( __FILE__ )
             );
 
@@ -41,7 +41,7 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
 		 * @since BuddyPress User Blog (1.0.0)
 		 */
 		public function option( $key ) {
-			return buddyboss_sap()->option( $key );
+			return buddyboss_bba()->option( $key );
 		}
 
 		/**
@@ -85,12 +85,12 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
 		}
 
 		/**
-		 * Add active SAP class
+		 * Add active BBA class
 		 *
 		 * @since BuddyPress User Blog (0.1.1)
 		 */
 		public function body_class( $classes ) {
-			$classes[] = apply_filters( 'buddyboss_sap_body_class', 'bp-user-blog' );
+			$classes[] = apply_filters( 'buddyboss_bba_body_class', 'bp-user-blog' );
 			return $classes;
 		}
 
@@ -100,20 +100,20 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
 		 */
 		public function assets() {
 
-			//if ( is_page_template('sap-post-create-template.php') ) {
+			//if ( is_page_template('bba-post-create-template.php') ) {
 			//Bower component css
-			wp_enqueue_style( 'bp-user-blog-medium-editor', buddyboss_sap()->bower_components . '/medium-editor/dist/css/medium-editor.min.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'bp-user-blog-medium-editor-theme', buddyboss_sap()->bower_components . '/medium-editor/dist/css/themes/default.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'bp-user-blog-medium-editor-insert', buddyboss_sap()->bower_components . '/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'bp-user-blog-medium-editor', buddyboss_bba()->bower_components . '/medium-editor/dist/css/medium-editor.min.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'bp-user-blog-medium-editor-theme', buddyboss_bba()->bower_components . '/medium-editor/dist/css/themes/default.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'bp-user-blog-medium-editor-insert', buddyboss_bba()->bower_components . '/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css', array(), '1.0.0', 'all' );
 
 			//Bower component JS
-			wp_enqueue_script( 'buddyboss-bower-medium-editor', buddyboss_sap()->bower_components . '/medium-editor/dist/js/medium-editor.js', array(), '1.0.0', true );
-			wp_enqueue_script( 'buddyboss-bower-handlebars', buddyboss_sap()->bower_components . '/handlebars/handlebars.runtime.min.js', array(), '1.0.0', true );
+			wp_enqueue_script( 'buddyboss-bower-medium-editor', buddyboss_bba()->bower_components . '/medium-editor/dist/js/medium-editor.js', array(), '1.0.0', true );
+			wp_enqueue_script( 'buddyboss-bower-handlebars', buddyboss_bba()->bower_components . '/handlebars/handlebars.runtime.min.js', array(), '1.0.0', true );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_script( 'jquery-ui-widget' );
-			wp_enqueue_script( 'buddyboss-bower-iframe-transport', buddyboss_sap()->bower_components . '/blueimp-file-upload/js/jquery.iframe-transport.js', array(), '1.0.0', true );
-			wp_enqueue_script( 'buddyboss-bower-fileupload', buddyboss_sap()->bower_components . '/blueimp-file-upload/js/jquery.fileupload.js', array(), '1.0.0', true );
+			wp_enqueue_script( 'buddyboss-bower-iframe-transport', buddyboss_bba()->bower_components . '/blueimp-file-upload/js/jquery.iframe-transport.js', array(), '1.0.0', true );
+			wp_enqueue_script( 'buddyboss-bower-fileupload', buddyboss_bba()->bower_components . '/blueimp-file-upload/js/jquery.fileupload.js', array(), '1.0.0', true );
 
 			
 			// FontAwesome icon fonts. If browsing on a secure connection, use HTTPS.
@@ -127,11 +127,11 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
 			}
 
 			// Stylesheet
-			//wp_enqueue_style( 'bp-user-blog-main', buddyboss_sap()->assets_url . '/css/bp-user-blog.css', array(), '1.0.3', 'all' );
-			wp_enqueue_style( 'bp-user-blog-main', buddyboss_sap()->assets_url . '/css/bp-user-blog.min.css', array(), BUDDYBOSS_SAP_PLUGIN_VERSION, 'all' );
+			//wp_enqueue_style( 'bp-user-blog-main', buddyboss_bba()->assets_url . '/css/bp-user-blog.css', array(), '1.0.3', 'all' );
+			wp_enqueue_style( 'bp-user-blog-main', buddyboss_bba()->assets_url . '/css/bp-user-blog.min.css', array(), BUDDYBOSS_BBA_PLUGIN_VERSION, 'all' );
 			// Scripts
-			//wp_enqueue_script( 'bp-user-blog-main', buddyboss_sap()->assets_url . '/js/bp-user-blog.js', array( 'jquery' ), '1.0.3', true );
-			wp_enqueue_script( 'bp-user-blog-main', buddyboss_sap()->assets_url . '/js/bp-user-blog.min.js', array( 'jquery' ), BUDDYBOSS_SAP_PLUGIN_VERSION, true );
+			//wp_enqueue_script( 'bp-user-blog-main', buddyboss_bba()->assets_url . '/js/bp-user-blog.js', array( 'jquery' ), '1.0.3', true );
+			wp_enqueue_script( 'bp-user-blog-main', buddyboss_bba()->assets_url . '/js/bp-user-blog.min.js', array( 'jquery' ), BUDDYBOSS_BBA_PLUGIN_VERSION, true );
 			
                         // Localize the script with new data
 			$translation_array = array(
@@ -144,12 +144,12 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
                                 'content_placeholder'   => __( 'Tell your story', 'bp-user-blog' )
 			);
                         
-                        $create_new_post_page = buddyboss_sap()->option('create-new-post');
+                        $create_new_post_page = buddyboss_bba()->option('create-new-post');
                         if(!empty( $create_new_post_page ) && $create_new_post_page == get_the_ID()) {
                             //Js and css for tags
-                            wp_enqueue_script( 'buddyboss-selectize-js', buddyboss_sap()->assets_url . '/js/selectize.min.js', array(), '1.0.0', true );
-                            wp_enqueue_style( 'buddyboss-selectize-css', buddyboss_sap()->assets_url . '/css/selectize.css', array(), '1.0.0', 'all' );
-                            wp_enqueue_style( 'buddyboss-selectize-css-default', buddyboss_sap()->assets_url . '/css/selectize.default.css', array(), '1.0.0', 'all' );
+                            wp_enqueue_script( 'buddyboss-selectize-js', buddyboss_bba()->assets_url . '/js/selectize.min.js', array(), '1.0.0', true );
+                            wp_enqueue_style( 'buddyboss-selectize-css', buddyboss_bba()->assets_url . '/css/selectize.css', array(), '1.0.0', 'all' );
+                            wp_enqueue_style( 'buddyboss-selectize-css-default', buddyboss_bba()->assets_url . '/css/selectize.default.css', array(), '1.0.0', 'all' );
                             
                             //for featured image
                             //wp_enqueue_media();
@@ -161,16 +161,16 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
                         }
                         
                         $config = array(
-                            'loading_image' => trailingslashit( BUDDYBOSS_SAP_PLUGIN_URL ). '/assets/images/loading.gif',
+                            'loading_image' => trailingslashit( BUDDYBOSS_BBA_PLUGIN_URL ). '/assets/images/loading.gif',
                             'home_url'      => trailingslashit( home_url() ),
                         );
                         
                         $translation_array['config'] = $config;
                         
-                        wp_localize_script( 'bp-user-blog-main', 'sap_loading_string', $translation_array );
+                        wp_localize_script( 'bp-user-blog-main', 'bba_loading_string', $translation_array );
             
-                        //wp_enqueue_script( 'buddyboss-bower-medium-editor-insert', buddyboss_sap()->bower_components . '/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js', array(), '1.0.1', true );
-                        wp_enqueue_script( 'buddyboss-bower-medium-editor-insert', buddyboss_sap()->bower_components . '/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js', array(), '1.0.1', true );
+                        //wp_enqueue_script( 'buddyboss-bower-medium-editor-insert', buddyboss_bba()->bower_components . '/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.js', array(), '1.0.1', true );
+                        wp_enqueue_script( 'buddyboss-bower-medium-editor-insert', buddyboss_bba()->bower_components . '/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js', array(), '1.0.1', true );
             }
         
         public function profile_default_option( $options=array() ){
@@ -205,7 +205,7 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
                 'user_id'           => $post->post_author,
                 'item_id'           => $post->ID,
                 'secondary_item_id' => '',
-                'component_name'    => 'sap',
+                'component_name'    => 'bba',
                 'component_action'  => 'post_approved',
             );
             
@@ -221,7 +221,7 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
             if( is_multisite() ){
                 $secondary_item_id = get_current_blog_id();
             }
-            bp_notifications_delete_all_notifications_by_type( $post->ID, 'sap', 'post_approved', $secondary_item_id );
+            bp_notifications_delete_all_notifications_by_type( $post->ID, 'bba', 'post_approved', $secondary_item_id );
         }
         
         public function format_notifications( $action, $item_id, $secondary_item_id, $total_items, $format='string' ){
@@ -238,11 +238,11 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
                 
                 if( $post_permalink ){
                     $post_permalink = add_query_arg( array(  
-                        'action'    => 'bp_sap_mark_read',
-                        '_wpnonce'  => wp_create_nonce( 'sap_notif_mark_read' ),
+                        'action'    => 'bp_bba_mark_read',
+                        '_wpnonce'  => wp_create_nonce( 'bba_notif_mark_read' ),
                     ), $post_permalink );
                     
-                    $text = apply_filters( "sap_post_approved_notification_text", __( "Your story was approved and published", "bp-user-blog" ) );
+                    $text = apply_filters( "bba_post_approved_notification_text", __( "Your story was approved and published", "bp-user-blog" ) );
 
                     if( 'string'==$format ){
                         return sprintf( "<a href='%s'>%s</a>", esc_url( $post_permalink ), $text );
@@ -260,10 +260,10 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
             if( is_admin() || !is_singular( 'post' ) )
                 return;
             
-            if( !isset( $_GET['action'] ) || $_GET['action'] != 'bp_sap_mark_read' )
+            if( !isset( $_GET['action'] ) || $_GET['action'] != 'bp_bba_mark_read' )
                 return;
             
-            if( ! wp_verify_nonce( $_GET['_wpnonce'], 'sap_notif_mark_read' ) )
+            if( ! wp_verify_nonce( $_GET['_wpnonce'], 'bba_notif_mark_read' ) )
                 return;
             
             $secondary_item_id = 0;
@@ -272,13 +272,13 @@ if ( !class_exists( 'BuddyBoss_SAP_BP_Component' ) ):
             }
             
             //mark notification read
-            bp_notifications_mark_notifications_by_item_id( get_the_author(), get_the_ID(), 'sap', 'post_approved', $secondary_item_id, 0 );
+            bp_notifications_mark_notifications_by_item_id( get_the_author(), get_the_ID(), 'bba', 'post_approved', $secondary_item_id, 0 );
         }
 	}
 
 
 
-	 //End of class BuddyBoss_SAP_BP_Component
+	 //End of class BuddyBoss_BBA_BP_Component
 
 
 endif;
