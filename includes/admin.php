@@ -29,7 +29,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 		public $options					 = array();
 		private $plugin_settings_tabs	 = array();
 		private $network_activated		 = false,
-		$plugin_slug			 = 'bb-bp-user-blog',
+		$plugin_slug			 = 'bb-bp-user-article',
 		$menu_hook				 = 'admin_menu',
 		$settings_page			 = 'buddyboss-settings',
 		$capability				 = 'manage_options',
@@ -154,7 +154,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 				if ( !function_exists( 'is_plugin_active_for_network' ) )
 					require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
-				if ( is_plugin_active_for_network( basename( constant( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) . '/bp-user-blog.php' ) ) {
+				if ( is_plugin_active_for_network( basename( constant( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) . '/bp-user-article.php' ) ) {
 					$network_activated = true;
 				}
 			}
@@ -175,18 +175,18 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 			$this->plugin_settings_tabs[ 'buddyboss_bba_plugin_options' ] = 'General';
 
 			register_setting( 'buddyboss_bba_plugin_options', 'buddyboss_bba_plugin_options', array( $this, 'plugin_options_validate' ) );
-			add_settings_section( 'general_section', __( 'General Settings', 'bp-user-blog' ), array( $this, 'section_general' ), __FILE__ );
+			add_settings_section( 'general_section', __( 'General Settings', 'bp-user-article' ), array( $this, 'section_general' ), __FILE__ );
 
 			//general options
-			add_settings_field( 'enabled-publish-post', __( 'Enable User Publishing', 'bp-user-blog' ), array( $this, 'enabled_publish_post' ), __FILE__, 'general_section' );
-			add_settings_field( 'post-create-page', __( 'Create New Post Page', 'bp-user-blog' ), array( $this, 'create_new_post_page' ), __FILE__, 'general_section' );
-			add_settings_field( 'enabled-bookmark-post', __( 'Enable Bookmarks', 'bp-user-blog' ), array( $this, 'enabled_bookmark_post' ), __FILE__, 'general_section' );
-			add_settings_field( 'bookmarks-page', __( 'Bookmarks Page', 'bp-user-blog' ), array( $this, 'bookmarks_page' ), __FILE__, 'general_section' );
-			add_settings_field( 'enabled-recommend-post', __( 'Enable Recommend Posts', 'bp-user-blog' ), array( $this, 'enabled_recommend_post' ), __FILE__, 'general_section' );
+			add_settings_field( 'enabled-publish-post', __( 'Enable User Publishing', 'bp-user-article' ), array( $this, 'enabled_publish_post' ), __FILE__, 'general_section' );
+			add_settings_field( 'post-create-page', __( 'Create New Post Page', 'bp-user-article' ), array( $this, 'create_new_post_page' ), __FILE__, 'general_section' );
+			add_settings_field( 'enabled-bookmark-post', __( 'Enable Bookmarks', 'bp-user-article' ), array( $this, 'enabled_bookmark_post' ), __FILE__, 'general_section' );
+			add_settings_field( 'bookmarks-page', __( 'Bookmarks Page', 'bp-user-article' ), array( $this, 'bookmarks_page' ), __FILE__, 'general_section' );
+			add_settings_field( 'enabled-recommend-post', __( 'Enable Recommend Posts', 'bp-user-article' ), array( $this, 'enabled_recommend_post' ), __FILE__, 'general_section' );
 		}
 
 		function register_support_settings() {
-			$this->plugin_settings_tabs[ 'buddyboss_bba_support_options' ] = __( 'Support', 'bp-user-blog' );
+			$this->plugin_settings_tabs[ 'buddyboss_bba_support_options' ] = __( 'Support', 'bp-user-article' );
 
 			register_setting( 'buddyboss_bba_support_options', 'buddyboss_bba_support_options' );
 			add_settings_section( 'section_support', ' ', array( &$this, 'section_support_desc' ), 'buddyboss_bba_support_options' );
@@ -209,7 +209,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 
 			echo '<label for="publish_post">';
 			echo "<input " . $checked . " id='publish_post' name='buddyboss_bba_plugin_options[publish_post]' type='checkbox' />  ";
-			_e( 'Allow users to publish posts. If unchecked, they can only submit drafts for review.', 'bp-user-blog' );
+			_e( 'Allow users to publish posts. If unchecked, they can only submit drafts for review.', 'bp-user-article' );
 			echo '</label>';
 		}
 
@@ -224,7 +224,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 
 			echo '<label for="bookmark_post">';
 			echo "<input " . $checked . " id='bookmark_post' name='buddyboss_bba_plugin_options[bookmark_post]' type='checkbox' />  ";
-			_e( 'Allow users to bookmark posts.', 'bp-user-blog' );
+			_e( 'Allow users to bookmark posts.', 'bp-user-article' );
 			echo '</label>';
 		}
 
@@ -239,7 +239,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 
 			echo '<label for="recommend_post">';
 			echo "<input " . $checked . " id='recommend_post' name='buddyboss_bba_plugin_options[recommend_post]' type='checkbox' />  ";
-			_e( 'Allow users to recommend posts.', 'bp-user-blog' );
+			_e( 'Allow users to recommend posts.', 'bp-user-article' );
 			echo '</label>';
 		}
 
@@ -249,14 +249,14 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 			echo wp_dropdown_pages( array(
 				'name'				 => 'buddyboss_bba_plugin_options[create-new-post]',
 				'echo'				 => false,
-				'show_option_none'	 => __( '- None -', 'bp-user-blog' ),
+				'show_option_none'	 => __( '- None -', 'bp-user-article' ),
 				'selected'			 => $create_new_post_page
 			) );
-			echo '<a href="' . admin_url( esc_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ) ) . '" class="button-secondary">' . __( 'New Page', 'bp-user-blog' ) . '</a>';
+			echo '<a href="' . admin_url( esc_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ) ) . '" class="button-secondary">' . __( 'New Page', 'bp-user-article' ) . '</a>';
 			if ( !empty( $create_new_post_page ) ) {
-				echo '<a href="' . get_permalink( $create_new_post_page ) . '" class="button-secondary" target="_bp" style="margin-left: 5px;">' . __( 'View', 'bp-user-blog' ) . '</a>';
+				echo '<a href="' . get_permalink( $create_new_post_page ) . '" class="button-secondary" target="_bp" style="margin-left: 5px;">' . __( 'View', 'bp-user-article' ) . '</a>';
 			}
-			echo '<p class="description">' . __( 'You may need to reset your permalinks after changing this setting. Go to Settings > Permalinks.', 'bp-user-blog' ) . '</p>';
+			echo '<p class="description">' . __( 'You may need to reset your permalinks after changing this setting. Go to Settings > Permalinks.', 'bp-user-article' ) . '</p>';
 		}
 
 		public function bookmarks_page() {
@@ -265,14 +265,14 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 			echo wp_dropdown_pages( array(
 				'name'				 => 'buddyboss_bba_plugin_options[bookmarks-page]',
 				'echo'				 => false,
-				'show_option_none'	 => __( '- None -', 'bp-user-blog' ),
+				'show_option_none'	 => __( '- None -', 'bp-user-article' ),
 				'selected'			 => $bookmarks_page
 			) );
-			echo '<a href="' . admin_url( esc_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ) ) . '" class="button-secondary">' . __( 'New Page', 'bp-user-blog' ) . '</a>';
+			echo '<a href="' . admin_url( esc_url( add_query_arg( array( 'post_type' => 'page' ), 'post-new.php' ) ) ) . '" class="button-secondary">' . __( 'New Page', 'bp-user-article' ) . '</a>';
 			if ( !empty( $bookmarks_page ) ) {
-				echo '<a href="' . get_permalink( $bookmarks_page ) . '" class="button-secondary" target="_bp" style="margin-left: 5px;">' . __( 'View', 'bp-user-blog' ) . '</a>';
+				echo '<a href="' . get_permalink( $bookmarks_page ) . '" class="button-secondary" target="_bp" style="margin-left: 5px;">' . __( 'View', 'bp-user-article' ) . '</a>';
 			}
-			echo '<p class="description">' . __( 'You may need to reset your permalinks after changing this setting. Go to Settings > Permalinks.', 'bp-user-blog' ) . '</p>';
+			echo '<p class="description">' . __( 'You may need to reset your permalinks after changing this setting. Go to Settings > Permalinks.', 'bp-user-article' ) . '</p>';
 		}
 
 		/**
@@ -324,12 +324,12 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 			$tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : __FILE__;
 			?>
 			<div class="wrap">
-				<h2><?php _e( 'BuddyPress User Blog', 'bp-user-blog' ); ?></h2>
+				<h2><?php _e( 'BuddyPress User Blog', 'bp-user-article' ); ?></h2>
 				<?php $this->plugin_options_tabs(); ?>
 				<form action="<?php echo $this->form_action; ?>" method="post">
 					<?php
 					if ( $this->network_activated && isset( $_GET[ 'updated' ] ) ) {
-						echo "<div class='updated'><p>" . __( 'Settings updated.', 'bp-user-blog' ) . "</p></div>";
+						echo "<div class='updated'><p>" . __( 'Settings updated.', 'bp-user-article' ) . "</p></div>";
 					}
 					?>
 					<?php
@@ -338,7 +338,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 						do_settings_sections( __FILE__ );
 						?>
 						<p class="submit">
-							<input name="bboss_g_s_settings_submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 'bp-user-blog' ); ?>" />
+							<input name="bboss_g_s_settings_submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 'bp-user-article' ); ?>" />
 						</p><?php
 					} else {
 						settings_fields( $tab );
@@ -364,12 +364,12 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 
 		public function add_action_links( $links, $file ) {
 			// Return normal links if not this plugin
-			if ( plugin_basename( basename( constant( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) . '/bp-user-blog.php' ) != $file ) {
+			if ( plugin_basename( basename( constant( 'BUDDYBOSS_BBA_PLUGIN_DIR' ) ) . '/bp-user-article.php' ) != $file ) {
 				return $links;
 			}
 
 			$mylinks = array(
-				'<a href="' . esc_url( $this->plugin_settings_url ) . '">' . __( "Settings", "bp-user-blog" ) . '</a>',
+				'<a href="' . esc_url( $this->plugin_settings_url ) . '">' . __( "Settings", "bp-user-article" ) . '</a>',
 			);
 			return array_merge( $links, $mylinks );
 		}
