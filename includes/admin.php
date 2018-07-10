@@ -284,7 +284,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 		 */
 		public function admin_menu() {
 			add_submenu_page(
-			$this->settings_page, 'User Blog', 'User Blog', $this->capability, $this->plugin_slug, array( $this, 'options_page' )
+			$this->settings_page, 'User Articles', 'User Articles', $this->capability, $this->plugin_slug, array( $this, 'options_page' )
 			);
 		}
 
@@ -324,7 +324,7 @@ if ( !class_exists( 'BuddyBoss_BBA_Admin' ) ) {
 			$tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : __FILE__;
 			?>
 			<div class="wrap">
-				<h2><?php _e( 'BuddyPress User Blog', 'bp-user-article' ); ?></h2>
+				<h2><?php _e( 'BuddyPress User Articles', 'bp-user-article' ); ?></h2>
 				<?php $this->plugin_options_tabs(); ?>
 				<form action="<?php echo $this->form_action; ?>" method="post">
 					<?php
