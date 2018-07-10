@@ -15,7 +15,7 @@ if ( !function_exists( 'bba_bookmark_scripts' ) ) {
 			wp_localize_script( 'bookmark-it', 'bookmark_it_vars', array(
 				'ajaxurl'		 => admin_url( 'admin-ajax.php' ),
 				'nonce'			 => wp_create_nonce( 'bookmark-it-nonce' ),
-				'error_message'	 => __( 'Sorry, there was a problem processing your request.', 'bp-user-blog' )
+				'error_message'	 => __( 'Sorry, there was a problem processing your request.', 'bp-user-article' )
 			)
 			);
 		}
@@ -161,9 +161,9 @@ if ( !function_exists( 'bba_get_bookmark_button' ) ) {
 			$bookmark_action = ( $has_bookmarked_post ) ? 'remove-bookmark' : 'add-bookmark';
 
 			$button = '<span class="bookmark-link-container">';
-			$button .= '<a href="#" title="' . __( 'Bookmark this story to read later', 'bp-user-blog' ) . '" class="bookmark-it' . $class . '" data-action="' . $bookmark_action . '" data-post-id="' . get_the_ID() . '" data-user-id="' . $user_ID . '">';
+			$button .= '<a href="#" title="' . __( 'Bookmark this story to read later', 'bp-user-article' ) . '" class="bookmark-it' . $class . '" data-action="' . $bookmark_action . '" data-post-id="' . get_the_ID() . '" data-user-id="' . $user_ID . '">';
 			$button .= '<span class="fa bb-helper-icon' . $icon . '"></span>';
-			$button .= '<span> ' . __( 'Bookmark', 'bp-user-blog' ) . '</span>';
+			$button .= '<span> ' . __( 'Bookmark Article', 'bp-user-article' ) . '</span>';
 			$button .= '</a>';
 			$button .= '</span>';
 
